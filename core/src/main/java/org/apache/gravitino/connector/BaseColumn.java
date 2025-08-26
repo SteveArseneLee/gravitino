@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.gravitino.annotation.Evolving;
+import org.apache.gravitino.meta.AuditInfo;
 import org.apache.gravitino.rel.Column;
 import org.apache.gravitino.rel.expressions.Expression;
 import org.apache.gravitino.rel.types.Type;
@@ -44,6 +45,8 @@ public abstract class BaseColumn implements Column {
   protected boolean autoIncrement;
 
   protected Expression defaultValue;
+
+  protected AuditInfo auditInfo;
 
   /**
    * Returns the name of the column.
@@ -96,6 +99,12 @@ public abstract class BaseColumn implements Column {
     return defaultValue;
   }
 
+  /** @return The audit information of this column. */
+  @Override
+  public AuditInfo auditInfo() {
+    return auditInfo;
+  }
+
   /**
    * Builder interface for creating instances of {@link BaseColumn}.
    *
@@ -116,6 +125,8 @@ public abstract class BaseColumn implements Column {
 
     SELF withDefaultValue(Expression defaultValue);
 
+    SELF withAuditInfo(AuditInfo auditInfo);
+
     T build();
   }
 
@@ -134,6 +145,7 @@ public abstract class BaseColumn implements Column {
     protected boolean nullable = true;
     protected boolean autoIncrement = false;
     protected Expression defaultValue;
+    protected AuditInfo auditInfo;
 
     /**
      * Sets the name of the column.
@@ -204,6 +216,18 @@ public abstract class BaseColumn implements Column {
     @Override
     public SELF withDefaultValue(Expression defaultValue) {
       this.defaultValue = defaultValue;
+      return self();
+    }
+
+    /**
+     * Sets the audit information of the column.
+     *
+     * @param auditInfo The audit information of the column.
+     * @return The builder instance.
+     */
+    @Override
+    public SELF withAuditInfo(AuditInfo auditInfo) {
+      this.auditInfo = auditInfo;
       return self();
     }
 

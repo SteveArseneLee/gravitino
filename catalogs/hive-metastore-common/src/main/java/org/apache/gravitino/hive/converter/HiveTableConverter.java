@@ -96,6 +96,7 @@ public class HiveTableConverter {
                             .withName(f.getName())
                             .withType(HiveDataTypeConverter.CONVERTER.toGravitino(f.getType()))
                             .withComment(f.getComment())
+                            .withAuditInfo(AuditInfo.EMPTY)
                             .build()),
             table.getPartitionKeys().stream()
                 .map(
@@ -104,6 +105,7 @@ public class HiveTableConverter {
                             .withName(p.getName())
                             .withType(HiveDataTypeConverter.CONVERTER.toGravitino(p.getType()))
                             .withComment(p.getComment())
+                            .withAuditInfo(AuditInfo.EMPTY)
                             .build()))
         .toArray(Column[]::new);
   }
