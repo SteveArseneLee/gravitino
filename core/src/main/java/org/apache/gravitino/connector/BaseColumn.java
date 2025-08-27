@@ -238,6 +238,10 @@ public abstract class BaseColumn implements Column {
      */
     @Override
     public T build() {
+      // Set default auditInfo if not provided
+      if (auditInfo == null) {
+        auditInfo = AuditInfo.EMPTY;
+      }
       T t = internalBuild();
       return t;
     }
